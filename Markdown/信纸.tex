@@ -1,0 +1,76 @@
+<script
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+  type="text/javascript">
+</script>
+
+$$
+% 文档类(模板)
+\documentclass{ctexart}
+
+% 汉字盒子宏包
+\usepackage{hanzibox}
+
+\title{\Large 用\texttt{hanzibox}宏包制作作文方格纸}
+\author{寄存器}
+\date{\today}
+
+% 正文区(有且只能有一个)
+\begin{document}
+
+\maketitle
+
+在语文教学中，往往需要在习题或试卷中排版方格纸以书写作文。
+为此，在笔者开发的\texttt{hanzibox}宏包中添加了一个用于
+制作作文方格纸的命令\verb|\writegrid|以按\texttt{hanzibox}%
+宏包设置的外观样式生成生成指定行列数的作文方格纸。
+
+\verb|\writegrid|命令仅需要一个必选参数用于指定方格纸的
+行数，有两个专用的可选参数：(1)\texttt{gridcols}用于指定
+列数；(2)\texttt{gridsepv}用于指定不同行的间距，间距值的
+倒数是汉字格子高度的比例。
+
+其它格子外观控制参数请参阅\texttt{hanzibox}说明书
+(\texttt{texdoc hanzibox})。
+
+\section{采用默认值绘制}
+\begin{center}
+  \writegrid{10}
+\end{center}
+
+\section{改变列数}
+\begin{minipage}{0.45\textwidth}
+  \centering
+  \writegrid[gridcols=10]{10}
+\end{minipage}\qquad
+\begin{minipage}{0.45\textwidth}
+  \centering
+  \writegrid[gridcols=10]{10}
+\end{minipage}
+
+\section{改变间距}
+% 可以用\hanziboxset命令设置参数
+\hanziboxset{gridcols=10}
+\begin{minipage}{0.45\textwidth}
+  \centering
+  \writegrid[gridsepv=3]{5}
+\end{minipage}\qquad
+\begin{minipage}{0.45\textwidth}
+  \centering
+  \writegrid[gridsepv=0.5]{5}
+\end{minipage}
+
+\section{改变格子样式}
+% 可以用\hanziboxset命令设置参数
+\hanziboxset{frametype=咪, framecolor=red,
+             gridcols=10, charf=\Huge}
+\centering
+\writegrid[fillcolor=yellow!30]{5}
+
+\bigskip
+
+\centering
+\writegrid[frametype=田, framecolor=blue]{5}
+
+\end{document}
+
+$$

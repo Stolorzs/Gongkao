@@ -1,0 +1,163 @@
+{
+  "main": {
+    "id": "f3d41ab8e0102c69",
+    "type": "split",
+    "children": [
+      {
+        "id": "6af3a4f536c991b3",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d983d4ed599fa1a3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Markdown/作文纸1.1.md",
+                "mode": "preview",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "58589696d2d97545",
+    "type": "split",
+    "children": [
+      {
+        "id": "86ee944479b5d086",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7e07c9f6bbb0895d",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "8f8f88929b6cf283",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "d57234fdf5715714",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "right": {
+    "id": "8ab708e9446f95ff",
+    "type": "split",
+    "children": [
+      {
+        "id": "e98ad32ff974d349",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c92c451b23369270",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Markdown/作文纸1.1.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "3e98393ff53d429c",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Markdown/作文纸1.1.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "57829074014adccf",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "0ad51f3133375456",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Markdown/作文纸1.1.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false
+    }
+  },
+  "active": "d983d4ed599fa1a3",
+  "lastOpenFiles": [
+    "逻辑判断.md",
+    "Markdown/类比推理.md",
+    "Markdown/综应.md",
+    "定义判断.md",
+    "Markdown/言语理解.md",
+    "Markdown/目录.md",
+    "未命名.md",
+    "Markdown/资料分析.md",
+    "Markdown/言语.md",
+    "Markdown/思维导图.md"
+  ]
+}
