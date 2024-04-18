@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>言语理解</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div style="text-align: center;">
+<a href="新目录.md" class="rounded-box">返回目录</a>
+</div>
+<style>
+    .rounded-box {
+    border: 2px solid #ccc; /* 边框宽度和颜色 */
+    border-radius: 10px; /* 圆角半径 */
+    padding: 5px; /* 文字与边框的间距 */
+    display: inline-block; /* 将元素显示为内联块元素，使其宽度适应内容 */
+    }
+</style>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Markdown目录生成器</title>
+    <style>
+        /* 样式化列表 */
+        .container {
+            column-count: 2;
+            column-gap: 20px;
+        }
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        ul ul {
+            margin-left: 20px; /* 缩进 */
+        }
+        ul a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="tableOfContents"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取所有标题元素
+            var headers = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+            // 创建目录字符串
+            var tableOfContents = '<ul>'; // 根列表
+            var lastLevel = 1; // 上一个标题级别
+            for (var i = 0; i < headers.length; i++) {
+                var header = headers[i];
+                var headerText = header.innerText || header.textContent;
+                // 获取标题级别
+                var level = parseInt(header.tagName.substring(1)); // 获取标题级别的数字部分
+                // 根据级别差异添加 ul 或 /ul
+                while (lastLevel < level) {
+                    tableOfContents += '<ul>';
+                    lastLevel++;
+                }
+                while (lastLevel > level) {
+                    tableOfContents += '</ul>';
+                    lastLevel--;
+                }
+                // 生成 headerId
+                var headerId = 'header-' + i; // 默认情况下使用索引作为 ID
+                if (header.hasAttribute('id')) {
+                    headerId = header.getAttribute('id'); // 如果标题元素有自定义的 ID，则使用它
+                } else {
+                    // 生成唯一的 ID，确保不与页面上的其他元素冲突
+                    headerId = 'header-' + i;
+                    header.setAttribute('id', headerId);
+                }
+                // 创建目录项
+                var listItemSymbol = '•'; // 默认为圆点
+                if (level === 2) {
+                    listItemSymbol = '▫︎'; // 第二级使用方空心点
+                } else if (level === 3) {
+                    listItemSymbol = '▪︎'; // 第三级使用方实心点
+                }
+                tableOfContents += '<li>' + listItemSymbol + ' <a href="#' + headerId + '">' + headerText + '</a></li>';
+            }
+            // 结束所有未关闭的列表
+            while (lastLevel > 1) {
+                tableOfContents += '</ul>';
+                lastLevel--;
+            }
+            tableOfContents += '</ul>'; // 结束根列表
+            // 将目录字符串添加到页面
+            var tocContainer = document.getElementById('tableOfContents');
+            tocContainer.innerHTML = tableOfContents;
+        });
+    </script>
+</body>
+</html>
+
+<h2 id="言语理解">言语理解</h2>
+<!-- _class: cover_a trans -->
+
+<h4 id="目录">目录</h4>
+<blockquote>
+<p>第一章 <a href="#3">片段阅读</a> <strong>(10题)</strong>
+中心理解题：重点词 (<a href="#4">转折</a><a href="#6">主题</a><a
+href="#7">因果</a><a href="#9">必要</a><a href="#10">程度</a><a
+href="#11">并列</a>） 中心理解题：<a href="#12">行文脉络</a>
+细节判断题：<a href="#13">细节判断</a></p>
+</blockquote>
+<blockquote>
+<p>第二章 语句表达 <strong>(10题)</strong> <a href="#14">语句排序题</a>
+<a href="#15">语句填空题</a> <a href="#16">接语选择题</a></p>
+</blockquote>
+<blockquote>
+<p>第三章 逻辑填空题 <strong>(20题)</strong> 实词、成语、混搭填空题：<a
+href="#17">词的辩析</a> <a href="#18">语境分析</a></p>
+</blockquote>
+<ul>
+<li>题量：40道</li>
+<li>做题时间：35分钟-40分钟左右</li>
+<li>正确率：70%-80%</li>
+</ul>
+<h4 id="中心理解题">中心理解题</h4>
+<ul>
+<li><strong>中心理解题</strong>
+<ul>
+<li>题量：10道左右</li>
+<li>提问方式：<strong>旨在说明</strong></li>
+</ul></li>
+<li><strong>解题顺序</strong>
+<ul>
+<li>看问题——带问题读文段——对应选项</li>
+</ul></li>
+<li><strong>解题思路</strong>：寻找中心句
+<ul>
+<li>有中心句：同义替换</li>
+<li>无中心句：全面概括</li>
+</ul></li>
+<li><strong>技巧</strong>：重点词语、行文脉络、</li>
+</ul>
+<h4 id="中心理解题--转折关系--上">中心理解题 | 转折关系 | 上</h4>
+<p><img src="图片/转折关系脑图.png" /></p>
+<h4 id="中心理解题--转折关系--下">中心理解题 | 转折关系 | 下</h4>
+<ul>
+<li><p><strong>转折关系</strong>——转折之后是重点</p>
+<ul>
+<li>“虽然<strong>但是</strong>、尽管可是、不过、然而、却、其实、事实上、实际上、<strong>必然要求</strong>”</li>
+<li>解释说明中的转折非文段重点、引入举例中的转折非文段重点</li>
+<li>转折常考结构：
+<ul>
+<li>1、引入 + 转折提出观点</li>
+<li>2、引入 + 转折提出观点 + 解释说明</li>
+<li>两个关键词出现，请把握行文脉络</li>
+</ul></li>
+<li><strong>转折前</strong>的内容有时也能判断</li>
+</ul></li>
+<li><p>略读句子的特征</p>
+<ul>
+<li>例子：比如、例如、譬如、诸如</li>
+<li>原因：因为、由于</li>
+<li>背景：近年来、随着、在……背景下</li>
+</ul></li>
+</ul>
+<h4 id="中心理解题--主题词">中心理解题 | 主题词</h4>
+<p><img src="图片/主题词脑图.png" /></p>
+<h4 id="中心理解题--因果关系--上">中心理解题 | 因果关系 | 上</h4>
+<p><img src="图片/因果关系脑图.png" /></p>
+<h4 id="中心理解题--因果关系--下">中心理解题 | 因果关系 | 下</h4>
+<ul>
+<li>答案特征：
+<ul>
+<li>正确答案特征：中心句同义替换</li>
+<li>错误答案特征：1、<strong>转折前</strong>的内容 2、围绕解释说明的表述
+3、无中生有 4、与文意相悖</li>
+</ul></li>
+<li><strong>主题词</strong>：定义：文段围绕的<strong>核心话题</strong>，文段围绕该主题词展开
+<ul>
+<li>判断方法：(1) 中心句围绕核心话题，前有引入，后有解释说明 (2)
+每句话都围绕相同话题——高频词</li>
+</ul></li>
+<li><strong>因果关系</strong> ：
+<ul>
+<li>所以 、因此、因耳、故而、故、于是、可见、看来</li>
+<li><strong>结论</strong>是重点</li>
+<li>若尾句出现结论词，通常尾句为中心句</li>
+</ul></li>
+<li>拟人化：正确答案对中心句进行拟人、比喻等形象表达的同义替换</li>
+<li>pic: <a href="图片/因果关系错题01.png">错题</a></li>
+<li>因果关系常用出题模板：
+<ul>
+<li>文段结构：<strong>结论</strong> + <strong>原因解释/原因分析</strong>
++ <strong>结论</strong></li>
+<li>正确选项设置：为什么、解释……的原因</li>
+</ul></li>
+</ul>
+<h4 id="中心理解题--必要条件">中心理解题 | 必要条件</h4>
+<p><img src="图片/必要条件思维导图.png" /></p>
+<h4 id="中心理解题--程度词">中心理解题 | 程度词</h4>
+<p><img src="图片/程度词思维导图.png" /></p>
+<ul>
+<li>典型标志词：更、尤其、正是、特别是、真正、根本、最核心、最突出</li>
+<li>非典型标志词：深为……倾倒、罪魁祸首、致命、堪比、极具特色</li>
+</ul>
+<h4 id="中心理解题--并列关系">中心理解题 | 并列关系</h4>
+<p><img src="图片/并列关系思维导图.png" /></p>
+<h4 id="中心理解题--行文脉络">中心理解题 | 行文脉络</h4>
+<p><img src="图片/行文脉络思维导图.png" /></p>
+<h4 id="细节判断题">细节判断题</h4>
+<p><img src="图片/细节判断脑图.png" /></p>
+<h4 id="语句排序题">语句排序题</h4>
+<p><img src="图片/语句排序脑图.png" /></p>
+<h4 id="语句填空题">语句填空题</h4>
+<p><img src="图片/语句填空脑图.png" /></p>
+<h4 id="接语选择题">接语选择题</h4>
+<p><img src="图片/接语选择脑图.png" /></p>
+<h4 id="逻辑填空题--词的辨析">逻辑填空题 | 词的辨析</h4>
+<p><img src="图片/词的辨析脑图.png" /></p>
+<ul>
+<li>词语积累：微信小程序、粉笔快练</li>
+</ul>
+<h4 id="逻辑填空题--语境分析">逻辑填空题 | 语境分析</h4>
+<p><img src="图片/语境分析脑图.png" /></p>
+</body>
+</html>

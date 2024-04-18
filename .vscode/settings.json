@@ -1,14 +1,10 @@
 {
-  "markdown.marp.enableHtml": true,
-  "markdown.marp.themes": [
-    "./themes/am_blue.scss",
-    "./themes/am_green.scss",
-    "./themes/am_red.scss",
-    "./themes/am_dark.scss",
-    "./themes/am_brown.scss",
-    "./themes/am_purple.scss",
-    "./themes/am_template.scss",
-    "https://raw.githubusercontent.com/dracula/marp/master/dracula/dracula.css",
-    "https://cunhapaulo.github.io/style/freud.css",
-  ]
+  "editor.insertSpaces": false,
+  "editor.wrappingColumn": 0,
+  "editor.quickSuggestions": {
+    "comments": "off",
+    "strings": "off",
+    "other": "off"
+  },
+  "pandoc.htmlOptString": "-s -f gfm -t html5 --css=css/style.css"
 }
