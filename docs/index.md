@@ -2,7 +2,8 @@
 <html>
 <head>
     <title>Markdown目录生成器</title>
-     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 </body>
