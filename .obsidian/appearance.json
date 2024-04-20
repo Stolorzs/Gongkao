@@ -1,8 +1,10 @@
 {
   "accentColor": "",
   "theme": "obsidian",
-  "textFontFamily": "Hei",
-  "monospaceFontFamily": "Hei",
-  "enabledCssSnippets": [],
+  "textFontFamily": "",
+  "monospaceFontFamily": "",
+  "enabledCssSnippets": [
+    "theme"
+  ],
   "cssTheme": ""
 }
