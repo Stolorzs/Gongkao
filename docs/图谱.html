@@ -2,7 +2,7 @@
         <html>
         <head>
             <meta charset="UTF-8">
-            <title>&#x7c7b;&#x6bd4;&#x63a8;&#x7406;</title>
+            <title></title>
             <style>
 /* From extension vscode.github */
 /*---------------------------------------------------------------------------------------------
@@ -130,8 +130,7 @@ body.marp-vscode blockquote {
 }
 
 </style>
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
-<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+            
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
 <style>
@@ -254,188 +253,174 @@ body.marp-vscode blockquote {
             <span id="markdown-mermaid" aria-hidden="true"
                     data-dark-mode-theme="dark"
                     data-light-mode-theme="default"></span>
-                <p><a href="index.html">返回目录</a></p>
-<h1 id="类比推理">类比推理</h1>
-<!DOCTYPE html>
+                <!DOCTYPE html>
 <html>
 <head>
+    <title>ECharts 关系图</title>
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <title>Markdown目录生成器</title>
-    <style>
-        body {
-        background-color: #242424; /* 背景色为黑色 */
-        color: #c1c1c1; /* 文字颜色为白色 */
-        }
-        /* 样式化列表 */
-        .container {
-            column-count: 2;
-            column-gap: 20px;
-        }
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
-        ul ul {
-            margin-left: 20px; /* 缩进 */
-        }
-        ul a {
-            text-decoration: none;
-        }
-    </style>
 </head>
 <body>
-    <div class="container" id="tableOfContents"></div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // 获取所有标题元素
-            var headers = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
-            // 创建目录字符串
-            var tableOfContents = '<ul>'; // 根列表
-            var lastLevel = 1; // 上一个标题级别
-            for (var i = 0; i < headers.length; i++) {
-                var header = headers[i];
-                var headerText = header.innerText || header.textContent;
-                // 获取标题级别
-                var level = parseInt(header.tagName.substring(1)); // 获取标题级别的数字部分
-                // 根据级别差异添加 ul 或 /ul
-                while (lastLevel < level) {
-                    tableOfContents += '<ul>';
-                    lastLevel++;
+    <div id="main" style="width:1000px;height:800px"></div>
+    <script type="text/javascript">
+        var myChart = echarts.init(document.getElementById('main'));
+        var categories = [];
+        for (var i = 0; i < 2; i++) {
+            categories[i] = {
+                name: '类目' + i
+            };
+        }
+        var option = {
+            // 图的标题
+            title: {
+                text: 'ECharts 关系图'
+            },
+            // 提示框的配置
+            tooltip: {
+                formatter: function (x) {
+                    return x.data.des;
                 }
-                while (lastLevel > level) {
-                    tableOfContents += '</ul>';
-                    lastLevel--;
+            },
+            // 工具箱
+            toolbox: {
+                // 显示工具箱
+                show: true,
+                feature: {
+                    mark: {
+                        show: true
+                    },
+                    // 还原
+                    restore: {
+                        show: true
+                    },
+                    // 保存为图片
+                    saveAsImage: {
+                        show: true
+                    }
                 }
-                // 生成 headerId
-                var headerId = 'header-' + i; // 默认情况下使用索引作为 ID
-                if (header.hasAttribute('id')) {
-                    headerId = header.getAttribute('id'); // 如果标题元素有自定义的 ID，则使用它
-                } else {
-                    // 生成唯一的 ID，确保不与页面上的其他元素冲突
-                    headerId = 'header-' + i;
-                    header.setAttribute('id', headerId);
-                }
-                // 创建目录项
-                var listItemSymbol = '•'; // 默认为圆点
-                if (level === 2) {
-                    listItemSymbol = '▫︎'; // 第二级使用方空心点
-                } else if (level === 3) {
-                    listItemSymbol = '▪︎'; // 第三级使用方实心点
-                }
-                tableOfContents += '<li>' + listItemSymbol + ' <a href="#' + headerId + '">' + headerText + '</a></li>';
+            },
+            legend: [{
+                // selectedMode: 'single',
+                data: categories.map(function (a) {
+                    return a.name;
+                })
+            }],
+            series: [{
+                type: 'graph', // 类型:关系图
+                layout: 'force', //图的布局，类型为力导图
+                symbolSize: 40, // 调整节点的大小
+                roam: true, // 是否开启鼠标缩放和平移漫游。默认不开启。如果只想要开启缩放或者平移,可以设置成 'scale' 或者 'move'。设置成 true 为都开启
+                edgeSymbol: ['circle', 'arrow'],
+                edgeSymbolSize: [2, 10],
+                edgeLabel: {
+                    normal: {
+                        textStyle: {
+                            fontSize: 20
+                        }
+                    }
+                },
+                force: {
+                    repulsion: 2500,
+                    edgeLength: [10, 50]
+                },
+                draggable: true,
+                lineStyle: {
+                    normal: {
+                        width: 2,
+                        color: '#4b565b',
+                    }
+                },
+                edgeLabel: {
+                    normal: {
+                        show: true,
+                        formatter: function (x) {
+                            return x.data.name;
+                        }
+                    }
+                },
+                label: {
+                    normal: {
+                        show: true,
+                        textStyle: {}
+                    }
+                },
+                // 数据
+                data: [{
+                    name: '目录',
+                    des: 'nodedes01',
+                    symbolSize: 70,
+                    category: 0,
+                    url: 'docs/index.html'
+                }, {
+                    name: 'node02',
+                    des: 'nodedes02',
+                    symbolSize: 50,
+                    category: 1,
+                    url: 'https://example.com/node02'
+                }, {
+                    name: 'node03',
+                    des: 'nodedes3',
+                    symbolSize: 50,
+                    category: 1,
+                    url: 'https://example.com/node03'
+                }, {
+                    name: 'node04',
+                    des: 'nodedes04',
+                    symbolSize: 50,
+                    category: 1,
+                    url: 'https://example.com/node04'
+                }, {
+                    name: 'node05',
+                    des: 'nodedes05',
+                    symbolSize: 50,
+                    category: 1,
+                    url: 'https://example.com/node05'
+                }],
+                links: [{
+                    source: 'node01',
+                    target: 'node02',
+                    name: 'link01',
+                    des: 'link01des'
+                }, {
+                    source: 'node01',
+                    target: 'node03',
+                    name: 'link02',
+                    des: 'link02des'
+                }, {
+                    source: 'node01',
+                    target: 'node04',
+                    name: 'link03',
+                    des: 'link03des'
+                }, {
+                    source: 'node01',
+                    target: 'node05',
+                    name: 'link04',
+                    des: 'link05des'
+                }],
+                categories: categories,
+                // 事件处理函数
+                emphasis: {
+                    focus: 'adjacency',
+                    lineStyle: {
+                        width: 10
+                    }
+                },
+                focusNodeAdjacency: true
+            }]
+        };
+        myChart.setOption(option);
+        // 添加点击事件处理函数
+        myChart.on('click', function (params) {
+            if (params.dataType === 'node') {
+                window.open(params.data.url); // 在新窗口中打开链接
             }
-            // 结束所有未关闭的列表
-            while (lastLevel > 1) {
-                tableOfContents += '</ul>';
-                lastLevel--;
-            }
-            tableOfContents += '</ul>'; // 结束根列表
-            // 将目录字符串添加到页面
-            var tocContainer = document.getElementById('tableOfContents');
-            tocContainer.innerHTML = tableOfContents;
         });
     </script>
 </body>
 </html>
-<h2 id="题型">题型</h2>
-<ul>
-<li>词语：A:B</li>
-<li>对于：A对于B--&gt;有顺序</li>
-</ul>
-<h2 id="语义关系">语义关系</h2>
-<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>近义词、反义词</mtext></mrow><annotation encoding="application/x-tex">近义词、反义词
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord cjk_fallback">近义词、反义词</span></span></span></span></span></p>
-<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>二级辨析：感情色彩</mtext><mo stretchy="false">(</mo><mtext>褒义、贬义、中性</mtext><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">二级辨析：感情色彩(褒义、贬义、中性)
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord cjk_fallback">二级辨析：感情色彩</span><span class="mopen">(</span><span class="mord cjk_fallback">褒义、贬义、中性</span><span class="mclose">)</span></span></span></span></span></p>
-<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>拆字</mtext><mo stretchy="false">(</mo><mtext>更创新</mtext><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">拆字(更创新)
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord cjk_fallback">拆字</span><span class="mopen">(</span><span class="mord cjk_fallback">更创新</span><span class="mclose">)</span></span></span></span></span></p>
-<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>比喻、象征</mtext></mrow><annotation encoding="application/x-tex">比喻、象征
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord cjk_fallback">比喻、象征</span></span></span></span></span></p>
-<blockquote>
-<p>丝竹：象征音乐<br>
-案牍：象征公文<br>
-汉清：竹简用火烤冒水后书写，象征史册<br>
-烽烟、戎马、干戈：象征战争<br>
-桃李：象征学生<br>
-七寸：要害(蛇的要害)<br>
-眉目：头绪</p>
-</blockquote>
-<h2 id="逻辑关系">逻辑关系</h2>
-<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><menclose notation="top bottom left right"><mtable rowspacing="0.66em" columnalign="center center center center center center center" columnlines="dashed dashed dashed dashed none none" columnspacing="1em" rowlines="solid none dashed none"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mstyle mathcolor="red"><mtext>全同</mtext></mstyle></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mstyle mathcolor="red"><mtext>并列</mtext></mstyle></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mstyle mathcolor="red"><mtext>包容</mtext></mstyle></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mstyle mathcolor="red"><mtext>交叉</mtext></mstyle></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mstyle mathcolor="red"><mtext>对应</mtext></mstyle></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>A</mi><mo>=</mo><mi>B</mi></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>①矛盾</mtext></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>①种属</mtext></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>有的是</mtext></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>材料</mtext></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>工艺</mtext></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>功能</mtext></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext> </mtext></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>②反对</mtext></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>②组成</mtext></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>有的不是</mtext></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>属性</mtext></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>时间</mtext></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>条件</mtext></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mtext>①生</mtext><mo>:</mo><mtext>死</mtext></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mtext>①苹果</mtext><mo>:</mo><mtext>水果</mtext></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mtext>唐诗</mtext><mo>:</mo><mtext>七律</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mtext>②东</mtext><mo>:</mo><mtext>西</mtext></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mtext>②轮胎</mtext><mo>:</mo><mtext>汽车</mtext></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mtext>女士</mtext><mo>:</mo><mtext>老师</mtext></mrow></mstyle></mtd></mtr></mtable></menclose></mrow><annotation encoding="application/x-tex">\def\arraystretch{1.5}
-    \begin{array}{|c:c:c:c:c c c|}\hline
-    \textcolor{red}{全同}&amp;  \textcolor{red}{并列} &amp;\textcolor{red}{包容}&amp;\textcolor{red}{交叉}&amp;&amp;\textcolor{red}{对应} \\ \hline
-    A=B &amp; ①矛盾 &amp; ①种属 &amp; 有的是 &amp;材料 &amp; 工艺 &amp; 功能\\ 
-    ~ &amp; ②反对 &amp; ②组成 &amp; 有的不是&amp;属性&amp;时间&amp;条件\\ \hdashline
-    &amp;①生:死&amp;①苹果:水果 &amp;唐诗:七律 \\ 
-    &amp;②东:西&amp;②轮胎:汽车 &amp;女士:老师\\\hline
-    \end{array} 
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:9.04em;vertical-align:-4.25em;"></span><span class="mord"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:4.79em;"><span style="top:-6.75em;"><span class="pstrut" style="height:6.75em;"></span><span class="mtable"><span class="vertical-separator" style="height:9em;border-right-width:0.04em;border-right-style:solid;margin:0 -0.02em;vertical-align:-4.25em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:4.75em;"><span style="top:-6.75em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"><span class="mord cjk_fallback" style="color:red;">全同</span></span></span><span style="top:-4.95em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span></span></span><span style="top:-3.15em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"><span class="mspace nobreak"> </span></span></span><span style="top:-1.35em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"></span></span><span style="top:0.45em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:4.25em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="vertical-separator" style="height:9em;border-right-width:0.04em;border-right-style:dashed;margin:0 -0.02em;vertical-align:-4.25em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:4.75em;"><span style="top:-6.75em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"><span class="mord cjk_fallback" style="color:red;">并列</span></span></span><span style="top:-4.95em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"><span class="mord">①</span><span class="mord cjk_fallback">矛盾</span></span></span><span style="top:-3.15em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"><span class="mord">②</span><span class="mord cjk_fallback">反对</span></span></span><span style="top:-1.35em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"><span class="mord">①</span><span class="mord cjk_fallback">生</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord cjk_fallback">死</span></span></span><span style="top:0.45em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"><span class="mord">②</span><span class="mord cjk_fallback">东</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord cjk_fallback">西</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:4.25em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="vertical-separator" style="height:9em;border-right-width:0.04em;border-right-style:dashed;margin:0 -0.02em;vertical-align:-4.25em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:4.75em;"><span style="top:-6.75em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"><span class="mord cjk_fallback" style="color:red;">包容</span></span></span><span style="top:-4.95em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"><span class="mord">①</span><span class="mord cjk_fallback">种属</span></span></span><span style="top:-3.15em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"><span class="mord">②</span><span class="mord cjk_fallback">组成</span></span></span><span style="top:-1.35em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"><span class="mord">①</span><span class="mord cjk_fallback">苹果</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord cjk_fallback">水果</span></span></span><span style="top:0.45em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"><span class="mord">②</span><span class="mord cjk_fallback">轮胎</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord cjk_fallback">汽车</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:4.25em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="vertical-separator" style="height:9em;border-right-width:0.04em;border-right-style:dashed;margin:0 -0.02em;vertical-align:-4.25em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:4.75em;"><span style="top:-6.75em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"><span class="mord cjk_fallback" style="color:red;">交叉</span></span></span><span style="top:-4.95em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"><span class="mord cjk_fallback">有的是</span></span></span><span style="top:-3.15em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"><span class="mord cjk_fallback">有的不是</span></span></span><span style="top:-1.35em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"><span class="mord cjk_fallback">唐诗</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord cjk_fallback">七律</span></span></span><span style="top:0.45em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"><span class="mord cjk_fallback">女士</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord cjk_fallback">老师</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:4.25em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="vertical-separator" style="height:9em;border-right-width:0.04em;border-right-style:dashed;margin:0 -0.02em;vertical-align:-4.25em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:4.75em;"><span style="top:-6.75em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"></span></span><span style="top:-4.95em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"><span class="mord cjk_fallback">材料</span></span></span><span style="top:-3.15em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"><span class="mord cjk_fallback">属性</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.65em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:4.75em;"><span style="top:-6.75em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"><span class="mord cjk_fallback" style="color:red;">对应</span></span></span><span style="top:-4.95em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"><span class="mord cjk_fallback">工艺</span></span></span><span style="top:-3.15em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"><span class="mord cjk_fallback">时间</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.65em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.95em;"><span style="top:-4.95em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"><span class="mord cjk_fallback">功能</span></span></span><span style="top:-3.15em;"><span class="pstrut" style="height:3.26em;"></span><span class="mord"><span class="mord cjk_fallback">条件</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.65em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="vertical-separator" style="height:9em;border-right-width:0.04em;border-right-style:solid;margin:0 -0.02em;vertical-align:-4.25em;"></span></span></span><span style="top:-2.5em;"><span class="pstrut" style="height:6.75em;"></span><span class="hline" style="border-bottom-width:0.04em;"></span></span><span style="top:-6.1em;"><span class="pstrut" style="height:6.75em;"></span><span class="hdashline" style="border-bottom-width:0.04em;"></span></span><span style="top:-9.7em;"><span class="pstrut" style="height:6.75em;"></span><span class="hline" style="border-bottom-width:0.04em;"></span></span><span style="top:-11.5em;"><span class="pstrut" style="height:6.75em;"></span><span class="hline" style="border-bottom-width:0.04em;"></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:4.25em;"><span></span></span></span></span></span></span></span></span></span></p>
-<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>全同关系</mtext></mrow><annotation encoding="application/x-tex">全同关系
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord cjk_fallback">全同关系</span></span></span></span></span></p>
-<ul>
-<li>A = B</li>
-</ul>
-<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>并列关系</mtext></mrow><annotation encoding="application/x-tex">并列关系
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord cjk_fallback">并列关系</span></span></span></span></span></p>
-<ul>
-<li>矛盾关系：一分为二，只有是或不是</li>
-</ul>
-<blockquote>
-<p>生：死</p>
-</blockquote>
-<ul>
-<li>反对关系：有别的可能</li>
-</ul>
-<blockquote>
-<p>东：西、扇子：空调(功能并列)</p>
-</blockquote>
-<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>包容关系</mtext></mrow><annotation encoding="application/x-tex">包容关系
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord cjk_fallback">包容关系</span></span></span></span></span></p>
-<ul>
-<li>种属关系：A是B的一种</li>
-</ul>
-<blockquote>
-<p>苹果：水果</p>
-</blockquote>
-<ul>
-<li>组成关系 ：A是B的一部分</li>
-</ul>
-<blockquote>
-<p>轮胎：汽车</p>
-</blockquote>
-<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>交叉关系：考的少</mtext></mrow><annotation encoding="application/x-tex">交叉关系：考的少
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord cjk_fallback">交叉关系：考的少</span></span></span></span></span></p>
-<ul>
-<li>有的A是B，有的A不是B</li>
-<li>有的B是A，有的B不是A</li>
-</ul>
-<blockquote>
-<p>女士：公务员、唐诗：七律</p>
-</blockquote>
-<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>对应关系：变化多</mtext></mrow><annotation encoding="application/x-tex">对应关系：变化多
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord cjk_fallback">对应关系：变化多</span></span></span></span></span></p>
-<blockquote>
-<p><font color = cyan>材料</font> 馒头：小麦(间接) | 面粉：馒头(直接)<br>
-<font color = cyan>工艺</font> 白酒：发酵(化学) | 玉石：雕琢(物理)<br>
-<font color = cyan>功能</font> 白糖：调味(主要) | 白醋：消毒(次要)<br>
-<font color = cyan>属性</font> 糖：甜( <font color=red>必然</font>) | 花:香( <font color=red>可能</font>)<br>
-<font color = cyan>时间</font> 购票：乘车 | 考试：阅卷(<font color = red>主体不一致</font>)<br>
-<font color = cyan>必要条件</font> 沸腾：沸点 (<font color = red>缺它不可</font>)</p>
-</blockquote>
-<h2 id="语法关系">语法关系</h2>
-<blockquote>
-<p>技巧：造句子——少加字、加字尽量一样</p>
-</blockquote>
-<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>主谓关系</mtext></mrow><annotation encoding="application/x-tex">主谓关系
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord cjk_fallback">主谓关系</span></span></span></span></span></p>
-<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>动宾关系</mtext></mrow><annotation encoding="application/x-tex">动宾关系
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord cjk_fallback">动宾关系</span></span></span></span></span></p>
-<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>主宾关系</mtext></mrow><annotation encoding="application/x-tex">主宾关系
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord cjk_fallback">主宾关系</span></span></span></span></span></p>
 
-            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+            
             <script async type="text/javascript">
 /* From extension bierner.markdown-mermaid */
 /*! For license information please see index.bundle.js.LICENSE.txt */
