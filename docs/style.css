@@ -12,3 +12,9 @@ body {
 background-color: #242424; /* 背景色为黑色 */
 color: #c1c1c1; /* 文字颜色为白色 */
 }
+.article {
+	width:20em; /* 设置每行的宽度 */
+	font-family: monospace; /* 使用 monospace 字体 */
+	line-height: 1.5; /* 每行的行高 */
+	text-indent: 2em;
+}
